@@ -1,5 +1,6 @@
 package org.lushplugins.lushrewards.module.dailyrewards;
 
+import org.bukkit.Bukkit;
 import org.lushplugins.lushlib.module.Module;
 import org.lushplugins.lushrewards.LushRewards;
 import org.lushplugins.lushrewards.data.RewardUser;
@@ -138,6 +139,15 @@ public class DailyRewardsModule extends RewardModule implements UserDataModule<D
         placeholder.register();
 
         LushRewards.getInstance().getLogger().info("Successfully loaded " + rewards.size() + " reward collections from '" + configurationSection.getCurrentPath() + "'");
+
+        Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
+        if (!onlinePlayers.isEmpty()) {
+            for (Player onlinePlayer : onlinePlayers) {
+                getOrLoadUserData(onlinePlayer.getUniqueId(), true);
+            }
+
+            LushRewards.getInstance().getLogger().info("Successfully loaded '" + id + "' user data for online players");
+        }
     }
 
     @Override
