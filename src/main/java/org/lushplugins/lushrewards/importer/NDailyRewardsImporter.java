@@ -1,6 +1,7 @@
 package org.lushplugins.lushrewards.importer;
 
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.lushplugins.lushlib.utils.DisplayItemStack;
@@ -131,8 +132,8 @@ public class NDailyRewardsImporter extends ConfigImporter {
             simpleItemStack.setSkullTexture(configurationSection.getString("player-head-texture", "mirror"));
         }
 
-        if (configurationSection.contains("custom-model-data")) {
-            simpleItemStack.setCustomModelData(configurationSection.getInt("custom-model-data"));
+        if (configurationSection.contains("model")) {
+            simpleItemStack.setModel(NamespacedKey.fromString(configurationSection.getString("model")));
         }
 
         if (configurationSection.contains("enchanted")) {
