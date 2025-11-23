@@ -1,5 +1,6 @@
 package org.lushplugins.lushrewards.rewards.collections;
 
+import org.bukkit.Registry;
 import org.lushplugins.lushlib.utils.DisplayItemStack;
 import org.lushplugins.lushlib.utils.converter.MapConverter;
 import org.lushplugins.lushlib.utils.converter.YamlConverter;
@@ -86,8 +87,7 @@ public class RewardCollection {
         ConfigurationSection itemSection = rewardCollectionSection.getConfigurationSection("display-item");
         DisplayItemStack displayItem = itemSection != null ? YamlConverter.getDisplayItem(itemSection) : DisplayItemStack.empty();
         Debugger.sendDebugMessage("Reward collection item set to: " + displayItem, debugMode);
-
-        Sound redeemSound = StringUtils.getEnum(rewardCollectionSection.getString("redeem-sound", "ENTITY_EXPERIENCE_ORB_PICKUP"), Sound.class).orElse(null);
+        Sound redeemSound = Registry.SOUNDS.match(rewardCollectionSection.getString("redeem-sound", "ENTITY_EXPERIENCE_ORB_PICKUP"));
 
         Debugger.sendDebugMessage("Attempting to load rewards", debugMode);
         List<Map<?, ?>> rewardMaps = rewardCollectionSection.getMapList("rewards");
@@ -114,7 +114,7 @@ public class RewardCollection {
         DisplayItemStack itemStack = itemMap != null ? MapConverter.getDisplayItemBuilder(itemMap).build() : DisplayItemStack.empty();
         Debugger.sendDebugMessage("Reward collection item set to: " + itemStack, debugMode);
 
-        Sound redeemSound = rewardCollectionMap.containsKey("redeem-sound") ? StringUtils.getEnum((String) rewardCollectionMap.get("redeem-sound"), Sound.class).orElse(null) : Sound.ENTITY_EXPERIENCE_ORB_PICKUP;
+        Sound redeemSound = Registry.SOUNDS.match(rewardCollectionMap.containsKey("redeem-sound") ? (String) rewardCollectionMap.get("redeem-sound") : "ENTITY_EXPERIENCE_ORB_PICKUP");
 
         Debugger.sendDebugMessage("Attempting to load rewards", debugMode);
         List<Map<?, ?>> rewardMaps = (List<Map<?, ?>>) rewardCollectionMap.get("rewards");

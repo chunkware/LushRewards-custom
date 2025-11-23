@@ -1,5 +1,6 @@
 package org.lushplugins.lushrewards.module.dailyrewards;
 
+import org.bukkit.Registry;
 import org.lushplugins.lushlib.utils.DisplayItemStack;
 import org.lushplugins.lushlib.utils.converter.YamlConverter;
 import org.lushplugins.lushrewards.exceptions.InvalidRewardException;
@@ -178,7 +179,7 @@ public class DailyRewardCollection extends RewardCollection {
         DisplayItemStack displayItem = itemSection != null ? YamlConverter.getDisplayItem(itemSection) : DisplayItemStack.empty();
         Debugger.sendDebugMessage("Reward collection item set to: " + displayItem, debugMode);
 
-        Sound redeemSound = StringUtils.getEnum(rewardCollectionSection.getString("redeem-sound", "none"), Sound.class).orElse(null);
+        Sound redeemSound = Registry.SOUNDS.match(rewardCollectionSection.getString("redeem-sound", "ENTITY_EXPERIENCE_ORB_PICKUP"));
 
         Debugger.sendDebugMessage("Attempting to load rewards", debugMode);
         List<Map<?, ?>> rewardMaps = rewardCollectionSection.getMapList("rewards");

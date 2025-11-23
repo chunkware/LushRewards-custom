@@ -1,6 +1,7 @@
 package org.lushplugins.lushrewards.module.dailyrewards;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Registry;
 import org.lushplugins.lushlib.module.Module;
 import org.lushplugins.lushrewards.LushRewards;
 import org.lushplugins.lushrewards.data.RewardUser;
@@ -70,7 +71,9 @@ public class DailyRewardsModule extends RewardModule implements UserDataModule<D
         this.allowRewardsStacking = config.getBoolean("allow-reward-stacking", true);
         this.streakBypass = config.getBoolean("streak-bypass");
 
-        this.defaultRedeemSound = StringUtils.getEnum(config.getString("default-redeem-sound", "none"), Sound.class).orElse(null);
+
+        this.defaultRedeemSound = Registry.SOUNDS.match(config.getString("default-redeem-sound", "none"));
+//        this.defaultRedeemSound = StringUtils.getEnum(config.getString("default-redeem-sound", "none"), Sound.class).orElse(null);
         setShouldNotify(config.getBoolean("enable-notifications", true));
         this.upcomingCategory = config.getString("upcoming-category");
 

@@ -1,5 +1,6 @@
 package org.lushplugins.lushrewards.module.playtimerewards;
 
+import org.bukkit.Registry;
 import org.lushplugins.lushlib.utils.DisplayItemStack;
 import org.lushplugins.lushlib.utils.converter.MapConverter;
 import org.lushplugins.lushlib.utils.converter.YamlConverter;
@@ -96,7 +97,7 @@ public class PlaytimeRewardCollection extends RewardCollection {
         DisplayItemStack displayItem = itemSection != null ? YamlConverter.getDisplayItem(itemSection) : DisplayItemStack.empty();
         Debugger.sendDebugMessage("Reward collection item set to: " + displayItem, debugMode);
 
-        Sound redeemSound = StringUtils.getEnum(rewardCollectionSection.getString("redeem-sound", "none"), Sound.class).orElse(null);
+        Sound redeemSound = Registry.SOUNDS.match(rewardCollectionSection.getString("redeem-sound", "none"));
         boolean hideFromGui = rewardCollectionSection.getBoolean("hide-from-gui");
         Debugger.sendDebugMessage("Attempting to load rewards", debugMode);
         List<Map<?, ?>> rewardMaps = rewardCollectionSection.getMapList("rewards");
@@ -131,7 +132,8 @@ public class PlaytimeRewardCollection extends RewardCollection {
         DisplayItemStack displayItem = itemMap != null ? MapConverter.getDisplayItem(itemMap) : DisplayItemStack.empty();
         Debugger.sendDebugMessage("Reward collection item set to: " + displayItem, debugMode);
 
-        Sound redeemSound = rewardCollectionMap.containsKey("redeem-sound") ? StringUtils.getEnum((String) rewardCollectionMap.get("redeem-sound"), Sound.class).orElse(Sound.ENTITY_EXPERIENCE_ORB_PICKUP) : Sound.ENTITY_EXPERIENCE_ORB_PICKUP;
+        Sound redeemSound = Registry.SOUNDS.match((String) rewardCollectionMap.get("redeem-sound"));
+//        Sound redeemSound = rewardCollectionMap.containsKey("redeem-sound") ? StringUtils.getEnum((String) rewardCollectionMap.get("redeem-sound"), Sound.class).orElse(Sound.ENTITY_EXPERIENCE_ORB_PICKUP) : Sound.ENTITY_EXPERIENCE_ORB_PICKUP;
         boolean showsInGui = rewardCollectionMap.containsKey("hide-from-gui") && (boolean) rewardCollectionMap.get("hide-from-gui");
 
         Debugger.sendDebugMessage("Attempting to load rewards", debugMode);

@@ -1,5 +1,6 @@
 package org.lushplugins.lushrewards.config;
 
+import org.bukkit.Registry;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -22,6 +23,8 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
+
+import static org.lushplugins.lushlib.utils.StringUtils.getEnum;
 
 public class ConfigManager {
     private static final File MODULES_FOLDER = new File(LushRewards.getInstance().getDataFolder(), "modules");
@@ -66,7 +69,7 @@ public class ConfigManager {
 
         playtimeIgnoreAfk = config.getBoolean("playtime-ignore-afk", true);
         reminderPeriod = config.getInt("reminder-period", 1800) * 20;
-        reminderSound = StringUtils.getEnum(config.getString("reminder-sound", "none"), Sound.class).orElse(null);
+        reminderSound = Registry.SOUNDS.match(config.getString("reminder-sound", "none"));
 
         try {
             Files.newDirectoryStream(MODULES_FOLDER.toPath(), "*.yml").forEach(entry -> {
