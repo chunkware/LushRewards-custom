@@ -5,13 +5,17 @@ plugins {
 }
 
 group = "org.lushplugins"
-version = "3.3.2"
+version = "3.3.2-custom"
 
 repositories {
     mavenLocal()
     mavenCentral()
     maven("https://oss.sonatype.org/content/repositories/snapshots/")
-    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // Spigot
+    maven {
+        name = "papermc"
+        url = uri("https://repo.papermc.io/repository/maven-public/")
+    }
+//    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // Spigot
     maven("https://repo.opencollab.dev/main/") // Floodgate
     maven("https://repo.lushplugins.org/releases/") // LushLib
     maven("https://repo.lushplugins.org/snapshots/") // LushLib
@@ -21,7 +25,8 @@ repositories {
 
 dependencies {
     // Dependencies
-    compileOnly("org.spigotmc:spigot-api:${findProperty("minecraftVersion")}-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:${findProperty("minecraftVersion")}-R0.1-SNAPSHOT")
+//    compileOnly("org.spigotmc:spigot-api:${findProperty("minecraftVersion")}-R0.1-SNAPSHOT")
 
     // Soft Dependencies
     compileOnly("org.geysermc.floodgate:api:${findProperty("floodgateVersion")}-SNAPSHOT")
@@ -29,7 +34,7 @@ dependencies {
 
     // Libraries
     implementation("org.bstats:bstats-bukkit:${findProperty("bStatsVersion")}")
-    implementation("org.lushplugins:LushLib:${findProperty("lushLibVersion")}")
+    implementation(files("libs/LushLib-0.10.83-custom.jar"))
     implementation("space.arim.morepaperlib:morepaperlib:${findProperty("morePaperLibVersion")}")
     implementation("com.zaxxer:HikariCP:${findProperty("hikariCPVersion")}")
     implementation("com.mysql:mysql-connector-j:${findProperty("mysqlConnectorVersion")}")
@@ -38,7 +43,7 @@ dependencies {
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
 tasks {
